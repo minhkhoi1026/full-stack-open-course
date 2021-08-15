@@ -2,18 +2,18 @@ import React from 'react'
 
 const Header = (prop) => (<h1>{prop.course}</h1>)
 
+const Part = (prop) => (
+  <p>
+      {prop.part} {prop.exercises}
+  </p>
+)
+
 const Content = (prop) => (
-  <>
-    <p>
-      {prop.part1} {prop.exercises1}
-    </p>
-    <p>
-      {prop.part2} {prop.exercises2}
-    </p>
-    <p>
-      {prop.part3} {prop.exercises3}
-    </p>
-  </>
+  <div>
+    <Part part={prop.part1} exercises={prop.exercises1}/>
+    <Part part={prop.part2} exercises={prop.exercises2}/>
+    <Part part={prop.part3} exercises={prop.exercises3}/>
+  </div>
 )
 
 const Total = (prop) => {

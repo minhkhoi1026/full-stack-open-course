@@ -10,27 +10,34 @@ const App = () => {
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients'
   ];
-  const n = anecdotes.length;
-  const [points, setPoints] = useState(Array(n).fill(0));
-  const [selected, setSelected] = useState(0);
+  const n = anecdotes.length
+  const [points, setPoints] = useState(Array(n).fill(0))
+  const [selected, setSelected] = useState(0)
 
-  const getRandomSelected = () => setSelected(Math.floor(Math.random() * n));
+  const getRandomSelected = () => setSelected(Math.floor(Math.random() * n))
   const voteAnecdote = () =>  {
-    const copy = {...points};
-    ++copy[selected];
-    setPoints(copy);
+    const copy = [...points]
+    ++copy[selected]
+    setPoints(copy)
   }
+  const indexOfMax = (...arr) => {
+    let idmax = 0
+    for(let i = 0; i < arr.length; ++i)
+      if (arr[i] > arr[idmax])
+        idmax = i
+    return idmax
+  }
+  const getMostVote = () => anecdotes[indexOfMax(...points)]
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
       <p>This anecdotes have {points[selected]} votes.</p>
-      <button onClick={voteAnecdote}>
-        vote
-      </button>
-      <button onClick={getRandomSelected}>
-        next anecdotes
-      </button>
+      <button onClick={voteAnecdote}>vote</button>
+      <button onClick={getRandomSelected}>next anecdotes</button>
+      <h1>Anecdote with most vote</h1>
+      <p>{getMostVote()}</p>
     </div>
   )
 }

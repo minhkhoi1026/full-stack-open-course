@@ -8,7 +8,7 @@ const VoteButton = ({onClick, text}) => {
   )
 };
 
-const Summary = ({name, val}) => (<p>{name}: {val}</p>);
+const StatisticLine = ({text, val}) => (<p>{text}: {val}</p>);
 
 const Statistics = (props) => {
   const {good, neutral, bad} = props
@@ -28,11 +28,11 @@ const Statistics = (props) => {
   return (
   <div>
     <h1>Statistics</h1>
-    <Summary name="good" val={good}/>
-    <Summary name="neutral" val={neutral}/>
-    <Summary name="bad" val={bad}/>
-    <Summary name ="all" val={numFeedback()}/>
-    <Summary name ="average" val={avgScore()}/>
+    <StatisticLine text="good" val={good}/>
+    <StatisticLine text="neutral" val={neutral}/>
+    <StatisticLine text="bad" val={bad}/>
+    <StatisticLine text ="all" val={numFeedback()}/>
+    <StatisticLine text ="average" val={avgScore()}/>
     <p>positive: {positiveRate()}% </p>
   </div>
   );

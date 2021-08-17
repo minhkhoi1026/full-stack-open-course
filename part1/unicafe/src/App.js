@@ -8,11 +8,18 @@ const VoteButton = ({onClick, text}) => {
   )
 };
 
-const StatisticLine = ({text, val}) => (<p>{text}: {val}</p>);
+const StatisticLine = ({text, val}) => {
+  return (
+  <tr>
+    <th>{text}</th>
+    <td>{val}</td>
+  </tr>
+  );
+}
 
 const Statistics = (props) => {
   const {good, neutral, bad} = props
-  // if not have any feedback yet then display this
+  // if not have any feedback yet then display this message
   if (good === 0 && neutral === 0 && bad ===0) {
     return (
       <div>
@@ -23,17 +30,20 @@ const Statistics = (props) => {
   }
   const numFeedback = () => (good + neutral + bad);
   const avgScore = () => ((good - bad)/numFeedback());
-  const positiveRate = () => (100 * good/numFeedback());
+  const positiveRate = () => (100 * good/numFeedback() + '%');
 
   return (
   <div>
     <h1>Statistics</h1>
-    <StatisticLine text="good" val={good}/>
-    <StatisticLine text="neutral" val={neutral}/>
-    <StatisticLine text="bad" val={bad}/>
-    <StatisticLine text ="all" val={numFeedback()}/>
-    <StatisticLine text ="average" val={avgScore()}/>
-    <p>positive: {positiveRate()}% </p>
+    <table>
+      <StatisticLine text="good" val={good}/>
+      <StatisticLine text="neutral" val={neutral}/>
+      <StatisticLine text="bad" val={bad}/>
+      <StatisticLine text ="all" val={numFeedback()}/>
+      <StatisticLine text ="average" val={avgScore()}/>
+      <StatisticLine text ="positive" val={positiveRate()}/>
+    </table>
+    
   </div>
   );
 };

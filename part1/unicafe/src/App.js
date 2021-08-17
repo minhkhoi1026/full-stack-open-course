@@ -12,6 +12,15 @@ const Summary = ({name, val}) => (<p>{name}: {val}</p>);
 
 const Statistics = (props) => {
   const {good, neutral, bad} = props
+  // if not have any feedback yet then display this
+  if (good === 0 && neutral === 0 && bad ===0) {
+    return (
+      <div>
+        <h1>Statistics</h1>
+        <p>No feedback given</p>
+      </div>
+    )
+  }
   const numFeedback = () => (good + neutral + bad);
   const avgScore = () => ((good - bad)/numFeedback());
   const positiveRate = () => (100 * good/numFeedback());

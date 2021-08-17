@@ -18,6 +18,9 @@ const App = () => {
   const voteGood = () => setGood(good + 1);
   const voteNeutral = () => setNeutral(neutral + 1);
   const voteBad = () => setBad(bad + 1);
+  const numFeedback = () => (good + neutral + bad);
+  const avgScore = () => ((good - bad)/numFeedback());
+  const positiveRate = () => (100 * good/numFeedback());
 
   return (
     <div>
@@ -29,6 +32,9 @@ const App = () => {
       <Summary name="good" val={good}/>
       <Summary name="neutral" val={neutral}/>
       <Summary name="bad" val={bad}/>
+      <Summary name ="all" val={numFeedback()}/>
+      <Summary name ="average" val={avgScore()}/>
+      <p>positive: {positiveRate()}% </p>
     </div>
   )
 }

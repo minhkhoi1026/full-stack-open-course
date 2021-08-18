@@ -1,5 +1,41 @@
 import React, { useState } from 'react'
 
+const Filter = ({showName, handleShowChange}) => {
+  return (
+  <p>
+    Filter shown with <input value={showName} onChange={handleShowChange}/>
+  </p>
+  )
+}
+
+const PersonForm = ({onSubmit, newName, onChangeName, newNumber, onChangeNumber}) => {
+  return (
+  <form onSubmit={onSubmit}>
+    <div>
+      Name: <input value={newName} onChange={onChangeName}/>
+    </div>
+    <div>
+      Number: <input value={newNumber} onChange={onChangeNumber}/>
+    </div>
+    <div>
+      <button type="submit">add</button>
+    </div>
+  </form>
+  )
+}
+
+const Persons = ({persons}) => {
+  return (
+  <ul>
+    {persons.map( 
+      person => <li key={person.name}>
+        {person.name}: {person.number}
+      </li>
+    )}
+  </ul>
+  )
+}
+
 const App = () => {
   const [ persons, setPersons ] = useState([
     { name: 'Arto Hellas', number: '040-123456' },
@@ -45,29 +81,21 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <p>
-        Filter shown with <input value={showName} onChange={handleShowChange}/>
-      </p>
-      <h2>Add new person</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          Name: <input value={newName} onChange={handleNameChange}/>
-        </div>
-        <div>
-          Number: <input value={newNumber} onChange={handleNumberChange}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      <ul>
-        {filteredPersons.map( 
-          person => <li key={person.name}>
-            {person.name}: {person.number}
-          </li>
-        )}
-      </ul>
+
+      <Filter
+      showName={showName}
+      handleShowChange={handleShowChange}
+      />
+
+      <h3>Add new person</h3>
+      <PersonForm 
+      onSubmit={addPerson} 
+      newName={newName} onChangeName={handleNameChange}
+      newNumber={newNumber} onChangeNumber={handleNumberChange}
+      />
+
+      <h3>Numbers</h3>
+      <Persons persons={filteredPersons}/>
     </div>
   )
 }

@@ -12,10 +12,15 @@ const App = () => {
   // add new name into @persons list
   const addPerson = (event) => {
     event.preventDefault()
+    // if person name already in then alert user
+    if (persons.findIndex(person => person.name === newName) !== -1) {
+      window.alert(`${newName} is already added to phonebook!`)
+      return
+    }
+
     const newPerson = {
       name: newName
     }
-    console.log(newPerson)
     setPersons(persons.concat(newPerson))
     setNewName('')
   }
@@ -34,7 +39,7 @@ const App = () => {
       <h2>Numbers</h2>
       <ul>
         {persons.map( 
-          person => <li>{person.name}</li>
+          person => <li key={person.name}>{person.name}</li>
         )}
       </ul>
     </div>

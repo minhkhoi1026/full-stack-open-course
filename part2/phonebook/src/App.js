@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const Filter = ({showName, handleShowChange}) => {
   return (
@@ -37,18 +38,26 @@ const Persons = ({persons}) => {
 }
 
 const App = () => {
-  const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345' },
-    { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ])
+  const [ persons, setPersons ] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ showName, setShowName] = useState('')
   const filteredPersons = persons.filter(
     (person) => person.name.toLowerCase().startsWith(showName.toLowerCase())
   )
+
+  // fetch data from server
+  const data_hook = () => {
+    axios.get('http://localhost:3001/persons')
+      .then(
+        (response) => {
+          setPersons(response.data)
+          console.log("Fetched", response)
+        }
+      )
+  }
+  useEffect(data_hook, [])
+
 
   // function to handle change on input
   const handleNameChange = (event) => {
@@ -60,7 +69,7 @@ const App = () => {
   const handleShowChange = (event) => {
     setShowName(event.target.value)
   }
-  // add new name into @persons list
+  // function add new name into @persons list
   const addPerson = (event) => {
     event.preventDefault()
     // if person name already in then alert user

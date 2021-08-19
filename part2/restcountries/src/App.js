@@ -1,55 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-
-const Country = ({country}) => {
-  return (
-    <div>
-      <h2>{country.name}</h2>
-      <ul>
-        <li>Capital name: {country.capital}</li>
-        <li>Population: {country.population} people</li>
-      </ul>
-      <h3>Languages</h3>
-      <ul>
-        {country.languages.map(
-          language => (<li key={language.iso639_2}>{language.name}</li>)
-        )}
-      </ul>
-      <img 
-      src={country.flag}
-      alt={`${country.name} flag`}
-      width="150px"
-      />
-    </div>
-  )
-}
-
-const CountriesDisplay = ({countries}) => {
-  // if more than 10 countries founded then return this
-  if (countries.length > 10)
-    return (
-      <p>Too many matches, specify your country</p>
-    )
-  // if there only exactly 1 country founded then return this
-  if (countries.length === 1) {
-    return (
-      <Country country={countries[0]}/>
-    )
-  }
-    
-  // other wise return this
-  return (
-    <ul>
-      {countries.map(
-        (country) => (<li key={country.name}>{country.name}</li>)
-      )}
-    </ul>
-  )
-}
+import CountriesDisplay from './components/CountriesDisplay.js'
 
 const App = () => {
   const [query, setQuery] = useState('')
   const [countries, setCountries] = useState([])
+  const [filteredCountries, setFilteredCountries] = useState([])
 
   //fetch data from RESTcountries server
   const data_hook = () => {
@@ -58,9 +14,13 @@ const App = () => {
       .then( response => setCountries(response.data) )
   }
   useEffect(data_hook, [])
-  const filteredCountries = countries.filter(
-    country => country.name.toLowerCase().includes(query.toLowerCase())
+  const filter_hook = () => {
+    const new_countries = countries.filter(
+      country => country.name.toLowerCase().includes(query.toLowerCase())
     )
+    setFilteredCountries(new_countries)
+  }
+  useEffect(filter_hook, [query, countries])
 
   const handleQueryChange = (event) => {
     setQuery(event.target.value)
@@ -71,7 +31,10 @@ const App = () => {
     <p>
       Find countries <input value={query} onChange={handleQueryChange}/>
     </p>
-    <CountriesDisplay countries={filteredCountries}/>
+    <CountriesDisplay 
+    countries={filteredCountries}
+    setCountries={setFilteredCountries}
+    />
   </div>
   );
 }

@@ -41,10 +41,7 @@ const App = () => {
       const isConfirmed = window.confirm(`${newName} is already added to phonebook, replace the old number with the new one`)
       if (isConfirmed) {
         const id = person.id
-        const newPerson = {
-          name: newName,
-          number: newNumber
-        }
+        const newPerson = {...person, number: newNumber}
 
         phoneBackEnd
         .update(id, newPerson)

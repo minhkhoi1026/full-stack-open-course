@@ -11,5 +11,10 @@ const create = (person) => {
     return request.then(response => response.data)
 }
 
-const phoneBackEnd = {getAll, create}
+const remove = (id) => {
+    const request = axios.delete(`${baseUrl}/${id}`)
+    return request
+}
+
+const phoneBackEnd = {getAll, create, remove}
 export default phoneBackEnd

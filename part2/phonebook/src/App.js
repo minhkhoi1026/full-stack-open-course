@@ -9,9 +9,6 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ showName, setShowName] = useState('')
-  const filteredPersons = persons.filter(
-    (person) => person.name.toLowerCase().startsWith(showName.toLowerCase())
-  )
 
   // fetch data from server
   const data_hook = () => {
@@ -75,7 +72,7 @@ const App = () => {
       />
 
       <h3>Numbers</h3>
-      <Persons persons={filteredPersons}/>
+      <Persons persons={persons} setPersons={setPersons} query={showName}/>
     </div>
   )
 }

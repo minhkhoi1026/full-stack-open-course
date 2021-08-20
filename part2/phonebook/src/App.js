@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
+import phoneBackEnd from './services/backend'
 
 const App = () => {
   const [ persons, setPersons ] = useState([])
@@ -15,13 +15,11 @@ const App = () => {
 
   // fetch data from server
   const data_hook = () => {
-    axios.get('http://localhost:3001/persons')
-      .then(
-        (response) => {
-          setPersons(response.data)
-          //console.log("Fetched", response)
-        }
-      )
+    phoneBackEnd
+    .getAll()
+    .then((initialPersons) => {
+      setPersons(initialPersons)
+    })
   }
   useEffect(data_hook, [])
 
@@ -49,12 +47,14 @@ const App = () => {
       name: newName,
       number: newNumber
     }
-    axios.post("http://localhost:3001/persons", newPerson)
-      .then( (response) => {
-        //console.log(response)
-        setPersons(persons.concat(response.data))
-        setNewName('')
-        setNewNumber('')
+    
+    phoneBackEnd
+      .create(newPerson)
+      .then( 
+        (receivedPerson) => {
+          setPersons(persons.concat(receivedPerson))
+          setNewName('')
+          setNewNumber('')
       } )
   }
 

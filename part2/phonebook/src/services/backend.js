@@ -16,5 +16,10 @@ const remove = (id) => {
     return request
 }
 
-const phoneBackEnd = {getAll, create, remove}
+const update = (id, newObject) => {
+    const request = axios.put(`${baseUrl}/${id}`, newObject)
+    return request.then(response => response.data)
+}
+
+const phoneBackEnd = {getAll, create, remove, update}
 export default phoneBackEnd

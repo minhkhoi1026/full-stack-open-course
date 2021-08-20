@@ -21,7 +21,7 @@ const Persons = ({persons, setPersons, query}) => {
   return (
   <ul>
     {filteredPersons.map( 
-      person => <li key={person.name}>
+      person => <li key={person.id}>
         {person.name}: {person.number}
         <button 
         value={person.name} 

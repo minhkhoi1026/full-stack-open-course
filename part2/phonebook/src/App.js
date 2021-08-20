@@ -34,12 +34,32 @@ const App = () => {
   // function add new name into @persons list
   const addPerson = (event) => {
     event.preventDefault()
-    // if person name already in then alert user
-    if (persons.findIndex(person => person.name === newName) !== -1) {
-      window.alert(`${newName} is already added to phonebook!`)
+    const person = persons.find(person => person.name === newName)
+
+    // if person name already in then alert user, if they want change number to a new one
+    if (person !== undefined) {
+      const isConfirmed = window.confirm(`${newName} is already added to phonebook, replace the old number with the new one`)
+      if (isConfirmed) {
+        const id = person.id
+        const newPerson = {
+          name: newName,
+          number: newNumber
+        }
+
+        phoneBackEnd
+        .update(id, newPerson)
+        .then(receivedPerson => {
+          setPersons(persons.map(
+            person => (person.id === id ? newPerson : person))
+          )
+          setNewName('')
+          setNewNumber('')
+        })
+      }
       return
     }
 
+    // otherwise create a person and add his/her to persons list
     const newPerson = {
       name: newName,
       number: newNumber

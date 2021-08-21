@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+app.use(express.json())
 
 let persons = [
     { 
@@ -57,6 +58,22 @@ app.delete('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id)
   persons = persons.filter(person => person.id !== id)
   response.status(204).end()
+})
+
+const generateId = (range) => {
+  return Math.floor(Math.random() * range)
+}
+
+// route for add new person into persons
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+  
+  if (!body)
+    return response.status(400).json({error: 'content missing'})
+
+  const newPerson = {...body, id: generateId(1e5)}
+  persons = persons.concat(newPerson)
+  response.json(newPerson)
 })
 
 const PORT = 3001

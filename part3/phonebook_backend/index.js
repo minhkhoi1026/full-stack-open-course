@@ -1,10 +1,25 @@
+const { json } = require('express')
 const express = require('express')
 const morgan = require('morgan')
 
 const app = express()
 app.use(express.json())
 // morgan logger
-const logger = morgan('tiny')
+const logger = morgan(function (tokens, req, res) {
+  let message = [
+    tokens.method(req, res),
+    tokens.url(req, res),
+    tokens.status(req, res),
+    tokens.res(req, res, 'content-length'), '-',
+    tokens['response-time'](req, res), 'ms'
+  ].join(' ')
+
+  // if method is POST then append json string of body object
+  if (req.method === 'POST')
+    message = [message, JSON.stringify(req.body)].join(' ')
+
+  return message
+})
 app.use(logger)
 
 let persons = [

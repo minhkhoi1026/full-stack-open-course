@@ -24,19 +24,33 @@ let persons = [
     }
 ]
 
+// route for default page
 app.get('/', (request, response) => {
     response.send(`<h1>Hello, I'm Minh Khoi Nguyen Nhat!</h1>`)
 })
 
+// route for persons request
 app.get('/api/persons', (request, response) => {
     response.json(persons)
 })
 
+// route for info request
 app.get('/info', (request, response) => {
   const date = new Date()
   response.send(
     `<p>Phonebook has info for ${persons.length} people. </p>
     <p>${date}</p>`)
+})
+
+// route for single person request
+app.get('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+  const person = persons.find(person => (person.id === id))
+  if (person)
+    response.json(person)
+  else {
+    response.status(404).end()
+  }
 })
 
 const PORT = 3001

@@ -1,9 +1,12 @@
-const { json } = require('express')
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
 
 const app = express()
+
+app.use(cors())
 app.use(express.json())
+
 // morgan logger
 const logger = morgan(function (tokens, req, res) {
   let message = [
@@ -44,11 +47,6 @@ let persons = [
       "number": "39-23-6423122"
     }
 ]
-
-// route for default page
-app.get('/', (request, response) => {
-    response.send(`<h1>Hello, I'm Minh Khoi Nguyen Nhat!</h1>`)
-})
 
 // route for persons request
 app.get('/api/persons', (request, response) => {

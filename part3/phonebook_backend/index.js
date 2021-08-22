@@ -4,7 +4,11 @@ const cors = require('cors')
 
 const app = express()
 
+//front end
+app.use(express.static('build'))
+// cross origin resource allow middleware
 app.use(cors())
+// json parser middleware
 app.use(express.json())
 
 // morgan logger
@@ -98,7 +102,7 @@ app.post('/api/persons', (request, response) => {
   response.json(newPerson)
 })
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`)
 })

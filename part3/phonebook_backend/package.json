@@ -6,11 +6,17 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "rm -rf build && cd ../../part2/phonebook && npm run build --prod && mv build ../../part3/phonebook_backend",
+    "deploy": "git push heroku master",
+    "deploy:simple": "git add . && git commit -m build_app && npm run deploy",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
+    "logs:prod": "heroku logs --tail"
   },
   "author": "\"Nguyen Nhat Minh Khoi\"",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "morgan": "^1.10.0"
   },

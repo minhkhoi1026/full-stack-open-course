@@ -63,10 +63,6 @@ app.delete('/api/persons/:id', (request, response) => {
   response.status(204).end()
 })
 
-const generateId = (range) => {
-  return Math.floor(Math.random() * range)
-}
-
 // route for add new person into persons
 app.post('/api/persons', (request, response) => {
   const body = request.body
@@ -75,12 +71,11 @@ app.post('/api/persons', (request, response) => {
   if ( !body || ['name', 'number'].some( prop => !(prop in body) ) )
     return response.status(400).json({error: 'content missing'})
   // handle name duplicate
-  if ( persons.find( person => (person.name === body.name) ) )
-    return response.status(400).json({error: 'name already exist on phone book'})
+  // if ( persons.find( person => (person.name === body.name) ) )
+  //   return response.status(400).json({error: 'name already exist on phone book'})
 
-  const newPerson = {...body, id: generateId(1e5)}
-  persons = persons.concat(newPerson)
-  response.json(newPerson)
+  const newPerson = new Person(body)
+  newPerson.save().then(savedPerson => response.json(savedPerson))
 })
 
 const PORT = process.env.PORT

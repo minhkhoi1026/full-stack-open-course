@@ -1,0 +1,16 @@
+GET https://nameless-badlands-51555.herokuapp.com/api/persons/11
+
+###
+GET https://nameless-badlands-51555.herokuapp.com/api/persons/1
+
+###
+DELETE https://nameless-badlands-51555.herokuapp.com/api/persons/1
+
+###
+POST https://nameless-badlands-51555.herokuapp.com/api/persons
+Content-Type: application/json
+
+{
+    "name": "Postman",
+    "number": "1922140"
+}

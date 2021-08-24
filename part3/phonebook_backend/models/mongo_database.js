@@ -17,11 +17,19 @@ mongoose.connect(url, {
 const personSchema = new mongoose.Schema({
     name: {
         type: String,
+        minLength: 3,
         unique: true,
         required: true
     },
     number: {
         type: String,
+        validate: {
+            validator: function(number) {
+                const digitsArr = number.match(/\d+/g);
+                return (digitsArr.join("").length >= 8) 
+            },
+            message: props => `${props.value} is less than 8 digits!`
+          },
         required: true
     }
 })

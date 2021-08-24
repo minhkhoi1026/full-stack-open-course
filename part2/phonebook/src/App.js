@@ -104,6 +104,7 @@ const App = () => {
         updateInfo()
         popupMessage(`[SUCCESS] Added number of ${receivedPerson.name}`)
     })
+    .catch(error => popupMessage(`[ERROR] ${error.response.data.error}`))
     }
   }
 

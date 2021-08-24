@@ -11,8 +11,8 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "name": "Postman3",
-    "number": "1922140"
+    "name": "adsf1121",
+    "number": "192--adfsadfasdf21"
 }
 
 ###

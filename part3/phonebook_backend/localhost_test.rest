@@ -14,6 +14,16 @@ Content-Type: application/json
     "name": "Postman",
     "number": "1922140"
 }
+
 ###
 DELETE http://localhost:3001/api/persons/6124e2693cde461e20ddd54912
 Content-Type: application/json
+
+###
+PUT http://localhost:3001/api/persons/6123f1013cab342aa4af5508
+Content-Type: application/json
+
+{
+    "name": "PutMan",
+    "number": "51124124-124"
+}

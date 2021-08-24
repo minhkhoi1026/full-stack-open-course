@@ -79,6 +79,18 @@ app.post('/api/persons', (request, response) => {
   newPerson.save().then(savedPerson => response.json(savedPerson))
 })
 
+// route for change content of person
+app.put('/api/persons/:id', (request, response, next) => {
+  const body = request.body
+  const person = {
+    name: body.name,
+    number: body.number
+  }
+  Person.findByIdAndUpdate(request.params.id, person, { new: true })
+  .then(updatedPerson => response.json(updatedPerson))
+  .catch(error => next(error))
+})
+
 // error handler for bad request
 const errorHandler = (error, request, response, next) => {
   console.log(error.message)

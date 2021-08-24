@@ -58,9 +58,9 @@ app.get('/api/persons/:id', (request, response) => {
 
 // route for delete a single person
 app.delete('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
-  persons = persons.filter(person => person.id !== id)
-  response.status(204).end()
+  Person.findByIdAndDelete(request.params.id)
+  .then(result => response.status(204).end())
+  .catch(error => response.status(400).json({ error: 'malformatted id'}))
 })
 
 // route for add new person into persons

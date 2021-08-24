@@ -65,18 +65,13 @@ app.delete('/api/persons/:id', (request, response, next) => {
 })
 
 // route for add new person into persons
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
   const body = request.body
   
-  // handle content missing
-  if ( !body || ['name', 'number'].some( prop => !(prop in body) ) )
-    return response.status(400).json({error: 'content missing'})
-  // handle name duplicate
-  // if ( persons.find( person => (person.name === body.name) ) )
-  //   return response.status(400).json({error: 'name already exist on phone book'})
-
   const newPerson = new Person(body)
-  newPerson.save().then(savedPerson => response.json(savedPerson))
+  newPerson.save()
+  .then(savedPerson => response.json(savedPerson.toJSON()))
+  .catch(error => next(error))
 })
 
 // route for change content of person
@@ -96,7 +91,9 @@ const errorHandler = (error, request, response, next) => {
   console.log(error.message)
   if (error.name === 'CastError') 
     response.status(400).json({ error: 'malformatted id'})
-  next(error)
+  else if (error.name === 'ValidationError')
+    response.status(400).json({ error: error.message })
+  next(error) 
 }
 app.use(errorHandler)
 

@@ -11,7 +11,8 @@
     "deploy": "git push heroku master",
     "deploy:simple": "git add . && git commit -m build_app && npm run deploy",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
-    "logs:prod": "heroku logs --tail"
+    "logs:prod": "heroku logs --tail",
+    "lint": "eslint ."
   },
   "author": "\"Nguyen Nhat Minh Khoi\"",
   "license": "MIT",
@@ -24,6 +25,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "eslint": "^7.32.0",
     "nodemon": "^2.0.12"
   }
 }

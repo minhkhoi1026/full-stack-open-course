@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-var uniqueValidator = require('mongoose-unique-validator');
+var uniqueValidator = require('mongoose-unique-validator')
 
 const url = process.env.MONGODB_URI
 
@@ -10,8 +10,8 @@ mongoose.connect(url, {
     useUnifiedTopology: true, 
     useFindAndModify: false, 
     useCreateIndex: true })
-.then(result => console.log('Connected to MongoDB'))
-.catch(error => console.log('Error in connected: ', error.message))
+    .then(result => console.log('Connected to MongoDB'))
+    .catch(error => console.log('Error in connected: ', error.message))
 
 // define document schema
 const personSchema = new mongoose.Schema({
@@ -25,16 +25,16 @@ const personSchema = new mongoose.Schema({
         type: String,
         validate: {
             validator: function(number) {
-                const digitsArr = number.match(/\d+/g);
-                return (digitsArr.join("").length >= 8) 
+                const digitsArr = number.match(/\d+/g)
+                return (digitsArr.join('').length >= 8) 
             },
             message: props => `${props.value} is less than 8 digits!`
-          },
+        },
         required: true
     }
 })
 // apply unique constraint
-personSchema.plugin(uniqueValidator);
+personSchema.plugin(uniqueValidator)
 
 // change collection to more readable format
 personSchema.set('toJSON', {

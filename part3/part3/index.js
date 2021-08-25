@@ -22,14 +22,14 @@ app.get('/api/notes', (request, response) => {
 
 app.get('/api/notes/:id', (request, response, next) => {
     const note = Note.findById(request.params.id)
-    .then(
-        note => {
-            if (note)
-                response.json(note)
-            else 
-                response.status(404).end()
-        })
-    .catch(error => next(error))
+        .then(
+            note => {
+                if (note)
+                    response.json(note)
+                else 
+                    response.status(404).end()
+            })
+        .catch(error => next(error))
 })
 
 app.post('/api/notes', (request, response, next) => {
@@ -42,17 +42,17 @@ app.post('/api/notes', (request, response, next) => {
     })
 
     note.save()
-    .then(savedNote => savedNote.toJSON())
-    .then(savedAndFormattedNote => {
-      response.json(savedAndFormattedNote)
-    }) 
-    .catch(error => next(error))
+        .then(savedNote => savedNote.toJSON())
+        .then(savedAndFormattedNote => {
+        response.json(savedAndFormattedNote)
+        }) 
+        .catch(error => next(error))
 })
 
 app.delete('/api/notes/:id', (request, response, next) => {
     Note.findByIdAndDelete(request.params.id)
-    .then(result => response.status(204).end())
-    .catch(error => next(error))
+        .then(result => response.status(204).end())
+        .catch(error => next(error))
 })
 
 app.put('/api/notes/:id', (request, response, next) => {
@@ -63,8 +63,8 @@ app.put('/api/notes/:id', (request, response, next) => {
         important: body.important,
     }
     Note.findByIdAndUpdate(request.params.id, note, { new : true })
-    .then(updatedNote => response.json(updatedNote))
-    .catch(error => next(error))
+        .then(updatedNote => response.json(updatedNote))
+        .catch(error => next(error))
 })
 
 const unknownEndpoint = (request, response) => {
@@ -83,7 +83,7 @@ const errorHandler = (error, request, response, next) => {
     }
     next(error)
 }
-  // this has to be the last loaded middleware.
+// this has to be the last loaded middleware.
 app.use(errorHandler)
 
 const PORT = process.env.PORT

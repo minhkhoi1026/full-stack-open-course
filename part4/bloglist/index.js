@@ -1,17 +1,13 @@
-require("dotenv").config()
 const http = require('http')
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const config = require('./utils/config')
 const mongoose = require('mongoose')
 
-const mongoUrl = process.env.MONGODB_URI
-console.log(`connecting to server...`)
-mongoose.connect(mongoUrl, { 
-  useNewUrlParser: true, 
-  useUnifiedTopology: true, 
-  useFindAndModify: false, 
-  useCreateIndex: true })
+const mongoUrl = config.MONGODB_URI
+console.log(`connecting to `, )
+mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 .catch(error => console.log("connect failed, error info: ", error))
 
 const blogSchema = new mongoose.Schema({
@@ -44,7 +40,7 @@ app.post('/api/blogs', (request, response) => {
     })
 })
 
-const PORT = process.env.PORT
+const PORT = config.PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })

@@ -39,3 +39,25 @@ const PORT = 3001
 app.listen(PORT)
 console.log(`Server running on port ${PORT}`)
 ```
+
+## ESLint
+
+ESLint is used for standardlize coding style. Run this code to install ESLint:
+```
+npm install eslint
+```
+
+To init coding style rule we go to *node_modules/.bin* directory an run following command:
+```
+eslint --init
+```
+
+To check if a file has wrong coding style:
+```
+eslint <file-name>
+```
+
+To fix wrong coding style in file:
+```
+eslint --fix <file-name>
+```

@@ -5,9 +5,9 @@ const cors = require('cors')
 const config = require('./utils/config')
 const mongoose = require('mongoose')
 
-const mongoUrl = config.MONGODB_URI
-console.log(`connecting to `, )
-mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+console.log(`connecting to `, config.MONGODB_URI)
+mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+.then(() => console.log("connected to server!"))
 .catch(error => console.log("connect failed, error info: ", error))
 
 const blogSchema = new mongoose.Schema({

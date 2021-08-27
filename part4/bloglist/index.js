@@ -3,12 +3,14 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const config = require('./utils/config')
+const logger = require('./utils/logger')
 const mongoose = require('mongoose')
 
-console.log(`connecting to `, config.MONGODB_URI)
-mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
-.then(() => console.log("connected to server!"))
-.catch(error => console.log("connect failed, error info: ", error))
+const mongoUrl = config.MONGODB_URI
+console.log(`connecting to`, mongoUrl)
+mongoose.connect(mongoUrl , { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+.then(() => logger.info("connected to server!"))
+.catch(error => logger.error("connect failed, error info: ", error))
 
 const blogSchema = new mongoose.Schema({
   title: String,
@@ -42,5 +44,5 @@ app.post('/api/blogs', (request, response) => {
 
 const PORT = config.PORT
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+  logger.info(`Server running on port ${PORT}`)
 })

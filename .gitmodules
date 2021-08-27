@@ -1,0 +1,3 @@
+[submodule "example/notes_backend"]
+	path = example/notes_backend
+	url = https://git.heroku.com/afternoon-reef-02984.git

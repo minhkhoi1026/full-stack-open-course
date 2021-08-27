@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --verbose"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "author": "\"Nguyen-Nhat-Minh-Khoi\"",
   "license": "MIT",
@@ -18,6 +21,7 @@
     "mongoose": "^5.13.8"
   },
   "devDependencies": {
+    "@types/jest": "^27.0.1",
     "jest": "^27.1.0",
     "nodemon": "^2.0.12"
   }

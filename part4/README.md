@@ -19,3 +19,7 @@ Config `jest` for testing in *package.json*
   }
 }
 ```
+Install *jest*'s intellisen in vscode
+```
+npm i -D @types/jest
+```

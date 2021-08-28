@@ -7,6 +7,21 @@ test('dummy returns one', () => {
   expect(result).toBe(1)
 })
 
+// test mostLikes function
+describe('most likes author', () => {
+  test('of a empty list is {}', () => {
+    const expected_result = {}
+    const result = listHelper.mostLikes(sample.emptyList)
+    expect(result).toEqual(expected_result)
+  })
+
+  test('of a multi-blog list is calculated right', () => {
+    const expected_result = { author: 'Edsger W. Dijkstra', likes: 17 }
+    const result = listHelper.mostLikes(sample.listWithMultiBlog)
+    expect(result).toEqual(expected_result)
+  })
+})
+
 // test mostBlogs function
 describe('most blog author', () => {
   test('of a empty list is {}', () => {

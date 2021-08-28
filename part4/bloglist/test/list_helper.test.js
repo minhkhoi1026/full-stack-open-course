@@ -7,6 +7,21 @@ test('dummy returns one', () => {
   expect(result).toBe(1)
 })
 
+// test mostBlogs function
+describe('most blog author', () => {
+  test('of a empty list is {}', () => {
+    const expected_result = {}
+    const result = listHelper.mostBlogs(sample.emptyList)
+    expect(result).toEqual(expected_result)
+  })
+
+  test('of a multi-blog list is calculated right', () => {
+    const expected_result = { author: 'Robert C. Martin', blogs: 3 }
+    const result = listHelper.mostBlogs(sample.listWithMultiBlog)
+    expect(result).toEqual(expected_result)
+  })
+})
+
 // test favoriteBlog function
 describe('favorite blog', () => {
   test('when list has only one blog, equals that only blog', () => {

@@ -1,3 +1,5 @@
+const _ = require('lodash')
+
 const dummy = (blogs) => {
   return 1
 }
@@ -25,4 +27,19 @@ const favoriteBlog = (blogs) => {
   return mappedBlogs.length == 0 ? {} : mappedBlogs.reduce(calculateMaxLikes, mappedBlogs[0])
 }
 
-module.exports = {dummy, totalLikes, favoriteBlog}
+const mostBlogs = (blogs) => {
+  // handle empty list case
+  if (blogs.length == 0)
+    return {}
+  // general case
+  let authors = _.groupBy(blogs, "author")
+  authors = _.map(authors, (blogs, author_name) => {
+    return {
+      author: author_name,
+      blogs: blogs.length
+    }
+  })
+  return _.maxBy(authors, 'blogs')
+}
+
+module.exports = {dummy, totalLikes, favoriteBlog, mostBlogs}

@@ -1,0 +1,39 @@
+GET http://localhost:3001/api/notes/
+
+###
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    "content": "Postman is good for testing REST API",
+    "important": true
+}
+###
+PUT http://localhost:3001/api/notes/6124605a8f8c961f509e87c8
+Content-Type: application/json
+
+{
+    "content": "PUT test",
+    "important": true,
+    "id": 14
+}
+###
+DELETE http://localhost:3001/api/notes/6124605a8f8c961f509e87c8
+
+###
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    "content": "",
+    "important": true
+}
+
+###
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    "content": "",
+    "important": true
+}

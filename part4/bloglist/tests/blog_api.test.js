@@ -65,4 +65,17 @@ describe("blog list", () => {
     const resultedBlog = response.body
     expect(resultedBlog.likes).toBe(0)
   })
+
+  test.only("responds 400 Bad Request if the title/url are missing (POST)", async () => {
+    const blogWithoutTitle = {
+      author: "Title missing",
+      url: "https://example.com",
+    }
+    const blogWithoutUrl = {
+      title: "Example",
+      author: "URL missing",
+    }
+    await api.post('/api/blogs').send(blogWithoutTitle).expect(400)
+    await api.post('/api/blogs').send(blogWithoutUrl).expect(400)
+  })
 })

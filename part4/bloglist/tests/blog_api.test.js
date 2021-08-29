@@ -36,4 +36,19 @@ describe("blog list", () => {
     const response = await api.get('/api/blogs')
     expect(response.body[0].id).toBeDefined()
   })
+
+  test("POST request successfully creates a new blog post", async () => {
+    await api.post('/api/blogs')
+      .send(sample.sampleBlog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    const response = await api.get('/api/blogs')
+    const resultBlogs = response.body.map(blog => {
+      delete blog.id
+      return blog
+    })
+    expect(resultBlogs).toHaveLength(initialBlogs.length + 1)
+    expect(resultBlogs).toContainEqual(sample.sampleBlog)
+  })
 })

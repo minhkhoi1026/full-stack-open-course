@@ -9,6 +9,14 @@ const listWithOneBlog = [
   }
 ]
 
+const sampleBlog = {
+  title: "Full Stack Open Course",
+  author: "University of Helsinky",
+  url: "https://fullstackopen.com/en",
+  likes: 7,
+  __v: 0
+}
+
 //
 const listWithMultiBlog = [
   {
@@ -64,4 +72,4 @@ const listWithMultiBlog = [
 //
 const emptyList = []
 
-module.exports = {listWithOneBlog, listWithMultiBlog, emptyList}
+module.exports = {listWithOneBlog, listWithMultiBlog, emptyList, sampleBlog}

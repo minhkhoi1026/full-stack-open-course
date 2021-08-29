@@ -21,7 +21,7 @@ afterAll(() => {
   mongoose.connection.close()
 })
 
-describe("blog list", () => {
+describe("fetch blog", () => {
   test("return correct amount of blogs posts", async () =>{
     const response = await api.get('/api/blogs')
     expect(response.body).toHaveLength(initialBlogs.length)
@@ -37,8 +37,10 @@ describe("blog list", () => {
     const response = await api.get('/api/blogs')
     expect(response.body[0].id).toBeDefined()
   })
+})
 
-  test("POST request successfully creates a new blog post", async () => {
+describe("POST request", () => {
+  test("successfully creates a new blog post", async () => {
     await api.post('/api/blogs')
       .send(sample.sampleBlog)
       .expect(201)
@@ -66,7 +68,7 @@ describe("blog list", () => {
     expect(resultedBlog.likes).toBe(0)
   })
 
-  test.only("responds 400 Bad Request if the title/url are missing (POST)", async () => {
+  test("responds 400 Bad Request if the title/url are missing", async () => {
     const blogWithoutTitle = {
       author: "Title missing",
       url: "https://example.com",
@@ -77,5 +79,24 @@ describe("blog list", () => {
     }
     await api.post('/api/blogs').send(blogWithoutTitle).expect(400)
     await api.post('/api/blogs').send(blogWithoutUrl).expect(400)
+  })
+})
+
+describe("DELETE request", () => {
+  test("successfully delete a valid blog post", async () => {
+    const id = initialBlogs[0]._id
+    await api.delete(`/api/blogs/${id}`)
+      .expect(204)
+
+    const response = await api.get('/api/blogs')
+    const resultedIds = response.body.map(blog => blog.id)
+    expect(resultedIds).toHaveLength(initialBlogs.length - 1)
+    expect(resultedIds).not.toContain(id)
+  })
+
+  test("response 400 Bad Request for invalid id format", async () => {
+    const id = "dsafasd"
+    await api.delete(`/api/blogs/${id}`)
+      .expect(400)
   })
 })

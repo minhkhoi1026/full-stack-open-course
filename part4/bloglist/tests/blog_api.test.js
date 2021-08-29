@@ -20,13 +20,20 @@ afterAll(() => {
   mongoose.connection.close()
 })
 
-test("blog list return correct amount of blogs posts", async () =>{
-  const response = await api.get('/api/blogs')
-  expect(response.body).toHaveLength(initialBlogs.length)
-})
-
-test("blog list return blog posts in JSON format", async () =>{
-  await api.get('/api/blogs')
-      .expect(200)
-      .expect('Content-Type', /application\/json/)
+describe("blog list", () => {
+  test("return correct amount of blogs posts", async () =>{
+    const response = await api.get('/api/blogs')
+    expect(response.body).toHaveLength(initialBlogs.length)
+  })
+  
+  test("return blog posts in JSON format", async () =>{
+    await api.get('/api/blogs')
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+  })
+  
+  test("has unique identifier property named id", async () =>{
+    const response = await api.get('/api/blogs')
+    expect(response.body[0].id).toBeDefined()
+  })
 })

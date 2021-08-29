@@ -100,3 +100,20 @@ describe("DELETE request", () => {
       .expect(400)
   })
 })
+
+describe("PUT request (update)", () => {
+  test("successfully update a valid blog post", async () => {
+    const newBlog = {id: initialBlogs[0]._id, ...sample.sampleBlog}
+
+    const response = await api.put(`/api/blogs/${newBlog.id}`)
+                              .send(newBlog)
+
+    expect(response.body).toEqual(newBlog)
+  })
+
+  test("response 400 Bad Request for invalid id format", async () => {
+    const id = "dsafasd"
+    await api.delete(`/api/blogs/${id}`)
+      .expect(400)
+  })
+})

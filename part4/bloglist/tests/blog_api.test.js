@@ -3,6 +3,7 @@ const Blog = require('../models/blog')
 const app = require('../app')
 const sample = require('./bloglist_sample')
 const mongoose = require('mongoose')
+const { notesInDb } = require('../../../example/notes_backend/tests/test_helper')
 
 const api = supertest(app)
 
@@ -50,5 +51,18 @@ describe("blog list", () => {
     })
     expect(resultBlogs).toHaveLength(initialBlogs.length + 1)
     expect(resultBlogs).toContainEqual(sample.sampleBlog)
+  })
+
+  test('default of the likes value if missing is 0', async () => {
+    const blogWithoutLikes = {
+      title: "Dynamic Programming",
+      author: "Rainbow Dango",
+      url: "https://minhkhoi1026.github.io/2020-08-04-dp-for-final-exam/",
+    }
+
+    const response = await api.post('/api/blogs').send(blogWithoutLikes)
+    
+    const resultedBlog = response.body
+    expect(resultedBlog.likes).toBe(0)
   })
 })

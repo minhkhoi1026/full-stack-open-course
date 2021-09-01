@@ -11,9 +11,10 @@ usersRouter.get('/', async (request, response) => {
 usersRouter.post('/', async (request, response) => {
   const body = request.body
 
+  if (!body.password || body.password.length < 3)
+    response.status(400).json({ error: 'invalid password' })
+
   const SALT_ROUND = 10
-  if (!body.password)
-    throw {name: "EncryptError", message: "Missing password when encrypt"}
   const passwordHash = await bcrypt.hash(body.password, SALT_ROUND)
 
   const newUser = new User({

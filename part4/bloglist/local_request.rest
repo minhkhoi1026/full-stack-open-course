@@ -28,5 +28,6 @@ Content-Type: application/json
 
 {
     "username": "yourmama",
-    "name": "Kha"
+    "name": "Kha",
+    "password": "123"
 }

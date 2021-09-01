@@ -13,3 +13,20 @@ GET http://localhost:3003/api/blogs
 
 ###
 DELETE http://localhost:3003/api/blogs/6128c84560ddba4e08461f1b
+###
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+    "username": "yourdada",
+    "name": "Khoi",
+    "password": "secret"
+}
+###
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+    "username": "yourmama",
+    "name": "Kha"
+}

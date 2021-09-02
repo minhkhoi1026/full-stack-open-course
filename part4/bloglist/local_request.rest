@@ -2,10 +2,11 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-    "title": "Full Stack Open Course",
-    "author": "University of Helsinki",
-    "url": "https://fullstackopen.com/en",
-    "likes": "9669"
+    "title": "Binary Search",
+    "author": "Khoi",
+    "url": "https://example.com",
+    "likes": "9669",
+    "user_id": "612f8f20159bf40d387b5b3c"
 }
 
 ###

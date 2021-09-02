@@ -37,13 +37,13 @@ POST http://localhost:3003/api/login
 Content-Type: application/json
 
 {
-    "username": "yourmama",
-    "password": "ultimate_secret"
+    "username": "yourdada",
+    "password": "secret"
 }
 ###
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1Ni1hIiwiaWQiOiI2MTJmOGZjMmFiYTI5YTJlYjRlNWY3ZmQiLCJpYXQiOjE2MzA1NzE1ODZ9.2W6W-CvcqmpV0Uy2pcWpwf5VfnGEIIgy7e0GKh2bK-s
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InlvdXJkYWRhIiwiaWQiOiI2MTJmOGYyMDE1OWJmNDBkMzg3YjViM2MiLCJpYXQiOjE2MzA1NzY2NDV9.EwCs_k2GEXxWct6x_tHSKp6Im0y07ZioKTa5Bnlb8Xc
 
 {
     "title": "Kruskal algorithm",
@@ -51,3 +51,6 @@ Authorization: bearer eyJhbGciOiJIUzI1Ni1hIiwiaWQiOiI2MTJmOGZjMmFiYTI5YTJlYjRlNW
     "url": "https://kruskal.com",
     "likes": "9669"
 }
+###
+DELETE http://localhost:3003/api/blogs/6130b70cb3018c0940249024
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InlvdXJkYWRhIiwiaWQiOiI2MTJmOGYyMDE1OWJmNDBkMzg3YjViM2MiLCJpYXQiOjE2MzA1NzY2NDV9.EwCs_k2GEXxWct6x_tHSKp6Im0y07ZioKTa5Bnlb8Xc

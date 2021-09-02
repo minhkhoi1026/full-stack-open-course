@@ -34,7 +34,17 @@ blogsRouter.post('/', async (request, response) => {
 })
 
 blogsRouter.delete('/:id', async (request, response) => {
-  await Blog.findByIdAndDelete(request.params.id)
+  const decodedToken = jwt.verify(request.token, config.KEY)
+
+  const blog = await Blog.findById(request.params.id)
+  if (decodedToken.id.toString() !== blog.user.toString())
+    return response.status(403).json({ error: 'request user need to be blog creator' })
+  
+  const user = await User.findById(blog.user)
+  user.blogs = user.blogs.filter(idBlog => idBlog != blog._id.toString())
+
+  blog.remove()
+  user.save()
   response.status(204).end()
 })
 

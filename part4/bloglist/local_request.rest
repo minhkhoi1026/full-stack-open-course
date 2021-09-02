@@ -40,3 +40,14 @@ Content-Type: application/json
     "username": "yourmama",
     "password": "ultimate_secret"
 }
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InlvdXJtYW1hIiwiaWQiOiI2MTJmOGZjMmFiYTI5YTJlYjRlNWY3ZmQiLCJpYXQiOjE2MzA1NzE1ODZ9.2W6W-CvcqmpV0Uy2pcWpwf5VfnGEIIgy7e0GKh2bK-s
+
+{
+    "title": "Floyd algorithm",
+    "author": "Floyd",
+    "url": "https://floyd.com",
+    "likes": "9669"
+}

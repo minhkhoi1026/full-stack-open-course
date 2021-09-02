@@ -1,8 +1,6 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
-const User = require('../models/user')
-const jwt = require('jsonwebtoken')
-const config = require('../utils/config')
+const userExtractor = require('../utils/middleware').userExtractor
 
 blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog
@@ -10,7 +8,7 @@ blogsRouter.get('/', async (request, response) => {
   response.json(blogs)
 })
 
-blogsRouter.post('/', async (request, response) => {
+blogsRouter.post('/', userExtractor, async (request, response) => {
   const body = request.body
   const user = request.user
 
@@ -29,14 +27,14 @@ blogsRouter.post('/', async (request, response) => {
   response.status(201).json(savedBlog)
 })
 
-blogsRouter.delete('/:id', async (request, response) => {
+blogsRouter.delete('/:id', userExtractor, async (request, response) => {
   const user = request.user
   const blog = await Blog.findById(request.params.id)
 
   if (user._id.toString() !== blog.user.toString())
     return response.status(403).json({ error: 'request user need to be blog creator' })
   
-  user.blogs = user.blogs.filter(idBlog => idBlog != blog._id.toString())
+  user.blogs = user.blogs.filter(idBlog => idBlog.toString() != blog._id.toString())
 
   blog.remove()
   user.save()

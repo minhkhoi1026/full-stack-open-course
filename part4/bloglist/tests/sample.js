@@ -1,3 +1,45 @@
+const listMultipleUsers = [
+  {
+    _id: "6b422bc61b54a676234d17fc",
+    name: "A B C",
+    username: "abc",
+    password: "secret"
+  },
+  {
+    _id: "6a422bc61b54a676234d17fc",
+    name: "Khoi",
+    username: "rainbowdango",
+    password: "ultrasecret"
+  },
+  {
+    _id: "6c422bc61b54a676234d17fc",
+    name: "123",
+    username: "123",
+    password: "ultimatesecret",
+  }
+]
+
+const listInvalidUsers = [
+  {
+    _id: "4a422bc61b54a676234d17fc",
+    name: "Khoi",
+    username: "1",
+    password: "ultrasecret"
+  },
+  {
+    _id: "4b422bc61b54a676234d17fc",
+    name: "123",
+    username: "123",
+    password: "ultimatesecret"
+  },
+  {
+    _id: "4c422bc61b54a676234d17fc",
+    name: "123",
+    username: "123",
+    password: "ultimatesecret"
+  }
+]
+
 const listWithOneBlog = [
   {
     _id: '5a422aa71b54a676234d17f8',
@@ -5,7 +47,7 @@ const listWithOneBlog = [
     author: 'Edsger W. Dijkstra',
     url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
     likes: 5,
-    __v: 0
+    __v: 0,
   }
 ]
 
@@ -14,7 +56,8 @@ const sampleBlog = {
   author: "University of Helsinky",
   url: "https://fullstackopen.com/en",
   likes: 7,
-  __v: 0
+  __v: 0,
+  user: listMultipleUsers[0]._id
 }
 
 //
@@ -25,7 +68,8 @@ const listWithMultiBlog = [
     author: "Michael Chan",
     url: "https://reactpatterns.com/",
     likes: 7,
-    __v: 0
+    __v: 0,
+    user: listMultipleUsers[0]._id
   },
   {
     _id: "5a422aa71b54a676234d17f8",
@@ -33,7 +77,8 @@ const listWithMultiBlog = [
     author: "Edsger W. Dijkstra",
     url: "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
     likes: 5,
-    __v: 0
+    __v: 0,
+    user: listMultipleUsers[0]._id
   },
   {
     _id: "5a422b3a1b54a676234d17f9",
@@ -41,7 +86,8 @@ const listWithMultiBlog = [
     author: "Edsger W. Dijkstra",
     url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
     likes: 12,
-    __v: 0
+    __v: 0,
+    user: listMultipleUsers[1]._id
   },
   {
     _id: "5a422b891b54a676234d17fa",
@@ -49,7 +95,8 @@ const listWithMultiBlog = [
     author: "Robert C. Martin",
     url: "http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll",
     likes: 10,
-    __v: 0
+    __v: 0,
+    user: listMultipleUsers[1]._id
   },
   {
     _id: "5a422ba71b54a676234d17fb",
@@ -57,7 +104,8 @@ const listWithMultiBlog = [
     author: "Robert C. Martin",
     url: "http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html",
     likes: 0,
-    __v: 0
+    __v: 0,
+    user: listMultipleUsers[2]._id
   },
   {
     _id: "5a422bc61b54a676234d17fc",
@@ -65,11 +113,15 @@ const listWithMultiBlog = [
     author: "Robert C. Martin",
     url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
     likes: 2,
-    __v: 0
+    __v: 0,
+    user: listMultipleUsers[2]._id
   }  
 ]
 
 //
 const emptyList = []
 
-module.exports = {listWithOneBlog, listWithMultiBlog, emptyList, sampleBlog}
+module.exports = {
+  listWithOneBlog, listWithMultiBlog, emptyList, sampleBlog,
+  listMultipleUsers, listInvalidUsers
+}

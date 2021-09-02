@@ -1,6 +1,6 @@
 const supertest = require('supertest')
 const app = require('../app')
-const sample = require('./users_sample')
+const sample = require('./sample')
 const User = require('../models/user')
 const user = require('../models/user')
 const mongoose = require('mongoose')
@@ -24,7 +24,7 @@ afterAll(() => {
 
 describe('Adding user', () => {
   test('invalid users are not created', async () => {
-    const promiseRequests = sample.invalidUsers.map(
+    const promiseRequests = sample.listInvalidUsers.map(
       (user) => {
         return api
         .post('/api/users')
@@ -39,7 +39,7 @@ describe('Adding user', () => {
 
   test('invalid add user operation returns a suitable status code and error message', 
   async () => {
-    const promiseRequests = sample.invalidUsers.map(
+    const promiseRequests = sample.listInvalidUsers.map(
       (user) => {
         return api
         .post('/api/users')

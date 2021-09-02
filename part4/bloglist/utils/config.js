@@ -1,4 +1,5 @@
 require("dotenv").config()
+const fs = require('fs')
 
 const MONGODB_URI = process.env.NODE_ENV === 'test' 
     ? process.env.TEST_MONGODB_URI
@@ -6,6 +7,9 @@ const MONGODB_URI = process.env.NODE_ENV === 'test'
 
 const PORT = process.env.PORT
 
+const KEY = fs.readFileSync(process.env.KEY_PATH)
+const CERT = fs.readFileSync(process.env.CERT_PATH)
+
 module.exports = {
-    MONGODB_URI, PORT
+    MONGODB_URI, PORT, KEY, CERT
 }

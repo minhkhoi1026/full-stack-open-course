@@ -12,9 +12,6 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
   const [notification, setNotification] = useState(null)
   const blogFormRef = useRef()
 
@@ -68,21 +65,11 @@ const App = () => {
     }
     
   }
-  // handle blog submit button
-  const handleBlogSubmit = async (event) => {
-    event.preventDefault()
-    const newBlog = {
-      title,
-      author,
-      url,
-    }
-    
+
+  const createBlog = async (newBlog) => {
     try {
       blogFormRef.current.toggleVisible()
       const resultBlog = await blogService.create(newBlog)
-      setTitle('')
-      setAuthor('')
-      setUrl('')
       setBlogs(blogs.concat(resultBlog))
       popupNotification({
         content: `Added blog: "${resultBlog.title}" of ${resultBlog.author}`, 
@@ -114,12 +101,7 @@ const App = () => {
       <Notification message={notification}/>
 
       <Togglable buttonLabel="create new blog" ref={blogFormRef}>
-          <BlogForm
-            handleBlogSubmit={handleBlogSubmit}
-            title={title} setTitle={setTitle}
-            author={author} setAuthor={setAuthor}
-            url={url} setUrl={setUrl}
-          />
+          <BlogForm createBlog={createBlog}/>
       </Togglable>
 
       <div className="info-user">

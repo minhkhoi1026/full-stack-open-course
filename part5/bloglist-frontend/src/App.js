@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
+import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -15,6 +16,7 @@ const App = () => {
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
   const [notification, setNotification] = useState(null)
+  const blogFormRef = useRef()
 
   // get blog after render file
   useEffect(() => {
@@ -76,13 +78,14 @@ const App = () => {
     }
     
     try {
+      blogFormRef.current.toggleVisible()
       const resultBlog = await blogService.create(newBlog)
       setTitle('')
       setAuthor('')
       setUrl('')
       setBlogs(blogs.concat(resultBlog))
       popupNotification({
-        content: `Added blog: "${resultBlog.name}" of ${resultBlog.author}`, 
+        content: `Added blog: "${resultBlog.title}" of ${resultBlog.author}`, 
         type: "notif"
       })
     }
@@ -110,14 +113,16 @@ const App = () => {
       <h2>Blogs</h2>
       <Notification message={notification}/>
 
-      <BlogForm
-        handleBlogSubmit={handleBlogSubmit}
-        title={title} setTitle={setTitle}
-        author={author} setAuthor={setAuthor}
-        url={url} setUrl={setUrl}
-      />
+      <Togglable buttonLabel="create new blog" ref={blogFormRef}>
+          <BlogForm
+            handleBlogSubmit={handleBlogSubmit}
+            title={title} setTitle={setTitle}
+            author={author} setAuthor={setAuthor}
+            url={url} setUrl={setUrl}
+          />
+      </Togglable>
 
-      <div>
+      <div className="info-user">
         {user.name} logged in 
         <button onClick={handleLogout}>log out</button>
       </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import LoginForm from './components/LoginForm'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -13,6 +14,7 @@ const App = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
+  const [notification, setNotification] = useState(null)
 
   // get blog after render file
   useEffect(() => {
@@ -32,21 +34,37 @@ const App = () => {
     }
   }, [])
 
+  // function for popup notification for 5s
+  const popupNotification = (notification) => {
+    setNotification(notification)
+    setTimeout(() => {
+      setNotification(null)
+    }, 5000);
+  }
   // handle logout button
   const handleLogout = () => {
     window.localStorage.removeItem('loggedUserJSON')
     setUser(null)
+    popupNotification({content: "Logged out successful", type: "notif"})
   }
   // handle login button
   const handleLogin = async (event) => {
     event.preventDefault()
-    const user = await loginService.login({username, password})
+
+    try {
+      const user = await loginService.login({username, password})
+      window.localStorage.setItem('loggedUserJSON', JSON.stringify(user))
+      blogService.setToken(user.token)
+      setUsername('')
+      setPassword('')
+      setUser(user)
+      popupNotification({content: "Logged in successful", type: "notif"})
+    }
+    catch (exception) {
+      console.log(exception)
+      popupNotification({content: "Wrong username or password", type: "error"})
+    }
     
-    window.localStorage.setItem('loggedUserJSON', JSON.stringify(user))
-    blogService.setToken(user.token)
-    setUsername('')
-    setPassword('')
-    setUser(user)
   }
   // handle blog submit button
   const handleBlogSubmit = async (event) => {
@@ -56,29 +74,42 @@ const App = () => {
       author,
       url,
     }
-    const resultNote = await blogService.create(newBlog)
-    console.log(resultNote)
-
-    setTitle('')
-    setAuthor('')
-    setUrl('')
-    setBlogs(blogs.concat(resultNote))
+    
+    try {
+      const resultBlog = await blogService.create(newBlog)
+      setTitle('')
+      setAuthor('')
+      setUrl('')
+      setBlogs(blogs.concat(resultBlog))
+      popupNotification({
+        content: `Added blog: "${resultBlog.name}" of ${resultBlog.author}`, 
+        type: "notif"
+      })
+    }
+    catch (exception) {
+      popupNotification({content: `${exception.response.data.error}`,  type: "error"})
+    }
   }
 
   // conditional rendering logged in or not
-  if (user === null) 
+  if (user === null)
     return (
-      <LoginForm
-        handleLogin={handleLogin}
-        username={username} setUsername={setUsername}
-        password={password} setPassword={setPassword}
-      />
+      <div>
+        <h2>Log in to application</h2>
+        <Notification message={notification}/>
+        <LoginForm
+          handleLogin={handleLogin}
+          username={username} setUsername={setUsername}
+          password={password} setPassword={setPassword}
+        />
+      </div>
     )
 
   return (
     <div>
-      <h2>blogs</h2>
-      
+      <h2>Blogs</h2>
+      <Notification message={notification}/>
+
       <BlogForm
         handleBlogSubmit={handleBlogSubmit}
         title={title} setTitle={setTitle}

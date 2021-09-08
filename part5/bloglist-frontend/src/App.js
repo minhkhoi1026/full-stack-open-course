@@ -60,12 +60,11 @@ const App = () => {
       popupNotification({content: "Logged in successful", type: "notif"})
     }
     catch (exception) {
-      console.log(exception)
       popupNotification({content: "Wrong username or password", type: "error"})
     }
   }
   // handle like button of blog clicked
-  const handleLikeClick = async (blog) => {
+  const upvoteBlog = async (blog) => {
     const changedBlog = {
       ...blog,
       likes: blog.likes + 1,
@@ -77,6 +76,21 @@ const App = () => {
         return updatedBlog
       return blog
     }))
+  }
+  // handle remove blog action
+  const removeBlog = async (blog) => {
+    const confirmed = window.confirm(`Remove "${blog.title}" of ${blog.author}?`)
+    if (confirmed) {
+      try {
+        const id = blog.id
+        await blogService.remove(id)
+        setBlogs(blogs.filter(blog => blog.id !== id))
+        popupNotification({content: "Delete successful", type: "notif"})
+      }
+      catch (exception) {
+        popupNotification({content: `${exception.response.data.error}`, type: "error"})
+      }
+    }
   }
   // handle create blog action
   const createBlog = async (newBlog) => {
@@ -125,7 +139,14 @@ const App = () => {
       {
       blogs
       .sort((a, b) => b.likes - a.likes)
-      .map(blog => <Blog key={blog.id} blog={blog} handleLikeClick={handleLikeClick}/>)
+      .map(blog => 
+              <Blog 
+              key={blog.id} 
+              blog={blog} 
+              upvoteBlog={upvoteBlog} 
+              removeBlog={removeBlog}
+              user={user}
+              />)
       }
     </div>
   )

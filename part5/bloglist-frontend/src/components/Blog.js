@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import Togglable from './Togglable'
 
-const Blog = ({blog}) => {
+const Blog = ({blog, handleLikeClick}) => {
   const [showFull, setShowFull] = useState(false)
+  // css for blog view
   const blogStyle = {
     paddingTop: 5,
     paddingLeft: 2,
@@ -15,7 +16,8 @@ const Blog = ({blog}) => {
     return (
       <>
         URL: {blog.url} <br/>
-        Likes: {blog.likes} <button>like</button> <br/>
+        Likes: {blog.likes} 
+        <button onClick={() => handleLikeClick(blog)}>like</button> <br/>
         Blog creator: {blog.user && blog.user.name} <br/>
       </>
     )

@@ -63,9 +63,22 @@ const App = () => {
       console.log(exception)
       popupNotification({content: "Wrong username or password", type: "error"})
     }
-    
   }
-
+  // handle like button of blog clicked
+  const handleLikeClick = async (blog) => {
+    const changedBlog = {
+      ...blog,
+      likes: blog.likes + 1,
+      user: blog.user._id
+    }
+    const updatedBlog = await blogService.update(blog.id, changedBlog)
+    setBlogs(blogs.map( blog => {
+      if (blog.id.toString() === updatedBlog.id.toString())
+        return updatedBlog
+      return blog
+    }))
+  }
+  // handle create blog action
   const createBlog = async (newBlog) => {
     try {
       blogFormRef.current.toggleVisible()
@@ -100,17 +113,17 @@ const App = () => {
       <h2>Blogs</h2>
       <Notification message={notification}/>
 
-      <Togglable buttonLabel="create new blog" ref={blogFormRef}>
-          <BlogForm createBlog={createBlog}/>
-      </Togglable>
-
       <div className="info-user">
         {user.name} logged in 
         <button onClick={handleLogout}>log out</button>
       </div>
 
+      <Togglable buttonLabel="create new blog" ref={blogFormRef}>
+          <BlogForm createBlog={createBlog}/>
+      </Togglable>
+
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} handleLikeClick={handleLikeClick} />
       )}
     </div>
   )

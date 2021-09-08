@@ -19,7 +19,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   // one-time log-in
@@ -38,29 +38,29 @@ const App = () => {
     setNotification(notification)
     setTimeout(() => {
       setNotification(null)
-    }, 5000);
+    }, 5000)
   }
   // handle logout button
   const handleLogout = () => {
     window.localStorage.removeItem('loggedUserJSON')
     setUser(null)
-    popupNotification({content: "Logged out successful", type: "notif"})
+    popupNotification({ content: 'Logged out successful', type: 'notif' })
   }
   // handle login button
   const handleLogin = async (event) => {
     event.preventDefault()
 
     try {
-      const user = await loginService.login({username, password})
+      const user = await loginService.login({ username, password })
       window.localStorage.setItem('loggedUserJSON', JSON.stringify(user))
       blogService.setToken(user.token)
       setUsername('')
       setPassword('')
       setUser(user)
-      popupNotification({content: "Logged in successful", type: "notif"})
+      popupNotification({ content: 'Logged in successful', type: 'notif' })
     }
     catch (exception) {
-      popupNotification({content: "Wrong username or password", type: "error"})
+      popupNotification({ content: 'Wrong username or password', type: 'error' })
     }
   }
   // handle like button of blog clicked
@@ -85,10 +85,10 @@ const App = () => {
         const id = blog.id
         await blogService.remove(id)
         setBlogs(blogs.filter(blog => blog.id !== id))
-        popupNotification({content: "Delete successful", type: "notif"})
+        popupNotification({ content: 'Delete successful', type: 'notif' })
       }
       catch (exception) {
-        popupNotification({content: `${exception.response.data.error}`, type: "error"})
+        popupNotification({ content: `${exception.response.data.error}`, type: 'error' })
       }
     }
   }
@@ -99,12 +99,12 @@ const App = () => {
       const resultBlog = await blogService.create(newBlog)
       setBlogs(blogs.concat(resultBlog))
       popupNotification({
-        content: `Added blog: "${resultBlog.title}" of ${resultBlog.author}`, 
-        type: "notif"
+        content: `Added blog: "${resultBlog.title}" of ${resultBlog.author}`,
+        type: 'notif'
       })
     }
     catch (exception) {
-      popupNotification({content: `${exception.response.data.error}`,  type: "error"})
+      popupNotification({ content: `${exception.response.data.error}`,  type: 'error' })
     }
   }
 
@@ -128,25 +128,25 @@ const App = () => {
       <Notification message={notification}/>
 
       <div className="info-user">
-        {user.name} logged in 
+        {user.name} logged in
         <button onClick={handleLogout}>log out</button>
       </div>
 
       <Togglable buttonLabel="create new blog" ref={blogFormRef}>
-          <BlogForm createBlog={createBlog}/>
+        <BlogForm createBlog={createBlog}/>
       </Togglable>
 
       {
-      blogs
-      .sort((a, b) => b.likes - a.likes)
-      .map(blog => 
-              <Blog 
-              key={blog.id} 
-              blog={blog} 
-              upvoteBlog={upvoteBlog} 
+        blogs
+          .sort((a, b) => b.likes - a.likes)
+          .map(blog =>
+            <Blog
+              key={blog.id}
+              blog={blog}
+              upvoteBlog={upvoteBlog}
               removeBlog={removeBlog}
               user={user}
-              />)
+            />)
       }
     </div>
   )

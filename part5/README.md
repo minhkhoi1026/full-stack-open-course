@@ -1,8 +1,3 @@
-## Login in frontend
-- Save item for later use: `window.localStorage`. Two common use method: `getItem` and `setItem`.
-
-- React prevent XSS attack by escape every text before render.
-
 ## Props.children
 - The child components are the React elements that we define between the opening and closing tags of a component. `props.children` is automatically added by React and always exists. If a component is defined with an automatically closing `/>` tag, then `props.children` is an *empty array*.
 
@@ -18,3 +13,13 @@
 - In the component that is referenced:
   - The function that creates the component is wrapped inside of a `React.forwardRef` function call. This way the component can access the ref that is assigned to it.
   - The component uses the `useImperativeHandle` hook to make its function available outside of the component.
+
+  ## Piece information
+- Save item for later use: `window.localStorage`. Two common use method: `getItem` and `setItem`.
+
+- React prevent XSS attack by escape every text before render.
+
+- The expected and required props of a component can be defined with the `prop-types` package.
+```
+npm install prop-types
+```

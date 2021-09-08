@@ -16,10 +16,9 @@
 
   ## Piece information
 - Save item for later use: `window.localStorage`. Two common use method: `getItem` and `setItem`.
-
 - React prevent XSS attack by escape every text before render.
-
 - The expected and required props of a component can be defined with the `prop-types` package.
 ```
 npm install prop-types
 ```
+-

@@ -31,7 +31,7 @@ const Blog = ({ blog, upvoteBlog, removeBlog, user }) => {
   }
 
   return (
-    <div style = {blogStyle}>
+    <div style = {blogStyle} className='blogDiv'>
         Title: {blog.title} <br/>
         Author: {blog.author} <br/>
       {showFull && hiddenInfo()}

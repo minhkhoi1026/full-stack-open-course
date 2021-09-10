@@ -54,6 +54,10 @@ console.log(prettyDOM(li))
 npm test -- --coverage
 ``
 
+- Unit tests validate the correct functioning of individual components. Integration testing tests the collaboration of multiple components.
+
+- Jest offers a completely different alternative to "traditional" testing called snapshot testing. Snapshot tests compare the HTML code defined by the component after it has changed to the HTML code that existed before it was changed. If the snapshot notices some change in the HTML defined by the component, then either it is new functionality or a "bug" caused by accident.
+
 ## Piece information
 - Save item for later use: `window.localStorage`. Two common use method: `getItem` and `setItem`.
 

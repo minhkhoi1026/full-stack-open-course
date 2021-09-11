@@ -52,11 +52,34 @@ console.log(prettyDOM(li))
 - Run test with *coverage* option:
 ```
 npm test -- --coverage
-``
+```
 
-- Unit tests validate the correct functioning of individual components. Integration testing tests the collaboration of multiple components.
+- Unit tests validate the correct functioning of individual components. Integration testing tests the collaboration of multiple components. E2E tests the system through the same interface as real users use
 
 - Jest offers a completely different alternative to "traditional" testing called snapshot testing. Snapshot tests compare the HTML code defined by the component after it has changed to the HTML code that existed before it was changed. If the snapshot notices some change in the HTML defined by the component, then either it is new functionality or a "bug" caused by accident.
+
+## End to end testing
+- We can use Cypress, Selenium, headless browser for end to end testing. Remember avoid flaky test. Here we use cypress.
+```
+npm install --save-dev cypress
+```
+
+- Graphical test: `cypress open`
+- Commandline test: `cypress run`
+
+- Some common method in cypress:
+  - `cy.get(selector)`: CSS selector of *the whole page*
+  - `cy.contains(text)`: selector by text
+  - `cy.request({ url, method, body, headers })`: send a HTML request
+  - `cy.visit(url)`: visit page front-end
+  - We can chain the selecting process. For example: `cy.contains(text).get(selector)`
+
+- Selected component have some common method for interact with it:
+  - `component.type(text)`: type text into component
+  - `component.click()`: click the component (trigger `onClick` callback).
+  - `component.as(alias)`: save an alias of component for later use. Ex: [link](https://docs.cypress.io/api/commands/as#DOM-element)
+
+- Cypress commands always return `undefined`. They act like promises, so if we want to access their return values, we have to do it using the `then` command.
 
 ## Piece information
 - Save item for later use: `window.localStorage`. Two common use method: `getItem` and `setItem`.

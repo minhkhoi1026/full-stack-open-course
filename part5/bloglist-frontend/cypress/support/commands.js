@@ -49,3 +49,12 @@ Cypress.Commands.add('createBlog', ({title, author, url}) => {
 Cypress.Commands.add('createUser', ({username, password, name}) => {
   cy.request('POST', 'http://localhost:3003/api/users', {name, username, password})
 })
+
+Cypress.Commands.add('likeBlogMulti', (title, c) => {
+  cy.contains(title).as('testBlog')
+  cy.get('@testBlog').contains('view').click()
+  for (let i = 0; i < c; i++) {
+    cy.get('@testBlog').contains('like').click()
+    cy.wait(1000)
+  }
+})

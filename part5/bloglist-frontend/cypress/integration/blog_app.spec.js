@@ -1,3 +1,5 @@
+import { element } from "prop-types"
+
 describe('Blog app', function () {
   beforeEach(function () {
     cy.request('POST', 'http://localhost:3003/api/testing/reset')
@@ -52,7 +54,7 @@ describe('Blog app', function () {
 
         cy.contains('Testing title')
         cy.contains('Testing author')
-        cy.contains('Testing title').parent().contains('view').click()
+        cy.contains('Testing title').contains('view').click()
         cy.contains('Testing url')
       })
 
@@ -62,32 +64,49 @@ describe('Blog app', function () {
         })
         
         it('User can like a blog', function () {
-          cy.contains('testing title').parent().as('testBlog')
-          cy.get('@testBlog').contains('view').click()
-          cy.get('@testBlog').contains('like').click()
+          cy.likeBlog('testing title')
 
           cy.get('@testBlog').contains('Likes: 1')
         })
 
         it('Blog can be removed by its creator', function () {
-          cy.contains('testing title').parent().as('testBlog')
+          cy.contains('testing title').as('testBlog')
           cy.get('@testBlog').contains('view').click()
           cy.get('@testBlog').contains('remove blog').click()
 
           cy.get('html').should('not.contain', 'testing title')
         })
 
-        it.only('Blog cannot be removed by user that are not creator', function() {
+        it('Blog cannot be removed by user that are not creator', function() {
           cy.createUser({
             name: 'Your Dada',
             username: 'yourdada',
             password: 'yourmama'
           })
           cy.login({ username: 'yourdada', password: 'yourmama' })
-          cy.contains('testing title').parent().as('testBlog')
+          cy.contains('testing title').as('testBlog')
           cy.get('@testBlog').contains('view').click()
 
           cy.get('@testBlog').should('not.contain', 'remove blog')
+        })
+      })
+
+      it.only('blogs are in ascending ordered of likes', function() {
+        cy.createBlog({title: '1 title', author: '1 author', url: '1 url'})
+        cy.createBlog({title: '2 title', author: '2 author', url: '2 url'})
+        cy.createBlog({title: '3 title', author: '3 author', url: '3 url'})
+        
+        cy.likeBlogMulti('3 title', 2) 
+        cy.likeBlogMulti('2 title', 1)
+        cy.likeBlogMulti('1 title', 0)
+
+        cy.get('.blogDiv').then(function (blogs) {
+          cy.wrap(blogs[0]).should('contain', 'Likes: 2')
+                          .should('contain', '3 title')
+          cy.wrap(blogs[1]).should('contain', 'Likes: 1')
+                          .should('contain', '2 title')
+          cy.wrap(blogs[2]).should('contain', 'Likes: 0')
+                          .should('contain', '1 title')
         })
       })
     })

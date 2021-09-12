@@ -64,6 +64,25 @@ npm test -- --coverage
 npm install --save-dev cypress
 ```
 
+- Avoid eslint error:
+```
+npm install eslint-plugin-cypress --save-dev
+```
+and in *.eslintrc.js* include this:
+```javascript
+module.exports = {
+    "env": {
+        "browser": true,
+        "es6": true,
+        "jest/globals": true,
+        "cypress/globals": true // this
+    },
+    "plugins": [
+        "react", "jest", "cypress" // and this
+    ]
+}
+```
+
 - Graphical test: `cypress open`
 - Commandline test: `cypress run`
 
@@ -73,6 +92,7 @@ npm install --save-dev cypress
   - `cy.request({ url, method, body, headers })`: send a HTML request
   - `cy.visit(url)`: visit page front-end
   - We can chain the selecting process. For example: `cy.contains(text).get(selector)`
+  - We can set timeout for command, for example `cy.contains(text, { timeout: 10000 })`, the default timeout is 4s.
 
 - Selected component have some common method for interact with it:
   - `component.type(text)`: type text into component

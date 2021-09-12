@@ -5,7 +5,7 @@ const LoginForm = (props) => {
 
   return (
     <div>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogin} id='login-form'>
         <div>
           username
           <input

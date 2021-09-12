@@ -1,12 +1,11 @@
 describe('Blog app', function () {
   beforeEach(function () {
     cy.request('POST', 'http://localhost:3003/api/testing/reset')
-    const user = {
+    cy.createUser({
       name: 'Minh Khoi',
       username: 'minhkhoi',
       password: 'superman'
-    }
-    cy.request('POST', 'http://localhost:3003/api/users', user)
+    })
     cy.visit('http://localhost:3000')
   })
 
@@ -62,12 +61,33 @@ describe('Blog app', function () {
           cy.createBlog({title: 'testing title', author: 'testing author', url: 'testing url'})
         })
         
-        it.only('User can like a blog', function () {
+        it('User can like a blog', function () {
           cy.contains('testing title').parent().as('testBlog')
           cy.get('@testBlog').contains('view').click()
           cy.get('@testBlog').contains('like').click()
 
           cy.get('@testBlog').contains('Likes: 1')
+        })
+
+        it('Blog can be removed by its creator', function () {
+          cy.contains('testing title').parent().as('testBlog')
+          cy.get('@testBlog').contains('view').click()
+          cy.get('@testBlog').contains('remove blog').click()
+
+          cy.get('html').should('not.contain', 'testing title')
+        })
+
+        it.only('Blog cannot be removed by user that are not creator', function() {
+          cy.createUser({
+            name: 'Your Dada',
+            username: 'yourdada',
+            password: 'yourmama'
+          })
+          cy.login({ username: 'yourdada', password: 'yourmama' })
+          cy.contains('testing title').parent().as('testBlog')
+          cy.get('@testBlog').contains('view').click()
+
+          cy.get('@testBlog').should('not.contain', 'remove blog')
         })
       })
     })

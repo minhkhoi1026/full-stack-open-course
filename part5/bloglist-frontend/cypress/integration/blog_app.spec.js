@@ -38,5 +38,24 @@ describe('Blog app', function () {
                       .should('have.css', 'border-style', 'solid')
       cy.get('html').should('not.contain', 'Minh Khoi logged in')
     })
+
+    describe('When logged in', function() {
+      beforeEach(function() {
+        cy.login({username: 'minhkhoi', password: 'superman'})
+      })
+  
+      it.only('A blog can be created', function() {
+        cy.contains('create new blog').click()
+        cy.get('#blog-form').find('input[name=\'Title\']').type('Testing title')
+        cy.get('#blog-form').find('input[name=\'Author\']').type('Testing author')
+        cy.get('#blog-form').find('input[name=\'Url\']').type('Testing url')
+        cy.contains('create blog').click()
+
+        cy.contains('Testing title')
+        cy.contains('Testing author')
+        cy.contains('Testing title').parent().contains('view').click()
+        cy.contains('Testing url')
+      })
+    })
   })
 })
